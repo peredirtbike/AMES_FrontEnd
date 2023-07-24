@@ -9,6 +9,10 @@
   </div>
 </template>
 
+<style>
+  
+</style>
+
 <script>
 // Importa Vue Router para poder utilizarlo en App.vue
 import { useRouter } from 'vue-router';

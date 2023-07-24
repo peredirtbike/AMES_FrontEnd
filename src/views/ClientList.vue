@@ -15,8 +15,15 @@
       <Column field="phone" header="Telèfon"></Column>
       <Column field="email" header="Email"></Column>
       <Column field="address" header="Adreça"></Column>
-      <Column field="hasDiscount" header="Descompte"></Column>
-      <Column field="preferential" header="Preferencial"></Column>
+      <Column field="hasDiscount" header="Descompte">
+        <template #body="rowData">
+          <i :class="{'pi pi-check': rowData.data.preferential, 'pi pi-times': !rowData.data.preferential}"></i>
+        </template>
+      </Column>
+      <Column field="preferential" header="Preferencial">
+        <template #body="rowData">
+          <i :class="{'pi pi-check': rowData.data.preferential, 'pi pi-times': !rowData.data.preferential}"></i>
+        </template></Column>
       <Column header="Accions">
         <template #body="rowData">
           <Button @click="editClient(rowData.data.id)">Editar</Button>
@@ -27,6 +34,7 @@
   </DataTable>
 </div>
 </template>
+
 
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex';
