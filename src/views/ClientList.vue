@@ -1,85 +1,64 @@
+
 <template>
   <div>
-    <table>
-      <thead>
-        <tr>
-        <td colspan="8" class="center">
-          <router-link to="/clients/new"> <!-- Redirige a /clients/new -->
-            <button>New Client</button>
-          </router-link>
-        </td>
-      </tr>
-        <tr>
-          <th>Nom</th>
-          <th>Cognom</th>
-          <th>Telèfon</th>
-          <th>Email</th>
-          <th>Adreça</th>
-          <th>Preferencial</th>
-          <th>Descompte</th>
-          <th>Accions</th>
-        </tr>
-      </thead>
-      <div>
-        <input type="text" v-model="searchTerm" placeholder="Buscar clientes...">
-      </div>
-      <tbody>
-        <tr v-for="client in filteredClients" :key="client.id">
-          <td>{{ client.name }}</td>
-          <td>{{ client.lastName }}</td>
-          <td>{{ client.phone }}</td>
-          <td>{{ client.email }}</td>
-          <td>{{ client.address }}</td>
-          <td>{{ client.preferential }}</td>
-          <td>{{ client.hasDiscount }}</td>
-          <td>
-            <button @click="editClient(client.id)">Editar</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <DataTable :value="filteredClients(searchTerm)" tableStyle="min-width: 50rem">
+      <template #header>
+          <div class="flex flex-wrap align-items-center justify-content-between gap-2">
+              <span class="text-xl text-900 font-bold">Clients</span>
+              <Button class="" @click="redirectToNewClientForm">Crea un client</Button>
+          </div>
+          <InputText type="text" v-model="searchTerm" placeholder="Busca clients" />
+
+      </template>
+      <Column field="name" header="Nom"></Column>
+      <Column field="lastName" header="Cognoms"></Column>
+      <Column field="phone" header="Telèfon"></Column>
+      <Column field="email" header="Email"></Column>
+      <Column field="address" header="Adreça"></Column>
+      <Column field="hasDiscount" header="Descompte"></Column>
+      <Column field="preferential" header="Preferencial"></Column>
+      <Column header="Accions">
+        <template #body="rowData">
+          <Button @click="editClient(rowData.data.id)">Editar</Button>
+        </template>
+      </Column>
+
+      <template #footer> En total hi ha {{ clients ? clients.length : 0 }} clients. </template>
+  </DataTable>
+</div>
 </template>
 
 <script>
-import axios from 'axios';
+import { mapActions, mapGetters, mapState } from 'vuex';
 
 export default {
   name: 'ClientList',
+  computed: {
+    ...mapGetters(['filteredClients']),
+    ...mapState(['clients']),
+  },
+  methods: {
+    ...mapActions(['fetchClients']),
+    editClient(clientId) {
+      this.$router.push(`/clients/${clientId}`);
+    },
+    redirectToNewClientForm() {
+      this.$router.push('/clients/new');
+    },
+  },
   data() {
     return {
-      clients: [],
       searchTerm: '',
     };
   },
-  methods: {
-    fetchClients() {
-      axios.get('http://localhost:8080/clients/getAllClients')
-        .then(response => {
-          this.clients = response.data;
-        })
-        .catch(error => {
-          console.error('Error al obtener los clientes:', error);
-        });
+  watch: {
+    searchTerm: {
+      handler(newTerm) {
+        this.filteredClients(newTerm);
+      },
+      immediate: true,
     },
-    editClient(clientId) {
-      // Redireccionar a la vista de edición de cliente con el ID
-      this.$router.push(`/clients/${clientId}`);
-    },
-  },
-  computed: {
-  filteredClients() {
-    return this.clients.filter(client => {
-      return (
-        client.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        client.lastName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        client.phone.includes(this.searchTerm) ||
-        client.email.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        client.address.toLowerCase().includes(this.searchTerm.toLowerCase())
-      );
-    });
-  },
-},
+  },      
   mounted() {
     this.fetchClients();
   },
