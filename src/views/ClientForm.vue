@@ -1,10 +1,10 @@
 <template>
   <div class="flex card justify-content-center align-items-center" style="height: 100vh;">
-    <div class="card p-4 shadow-2 border-round">
+    <div class="card p-4 shadow-8 border-round">
 
       <div class="flex align-items-center justify-content-between mb-4" >
         <span class="text-xl text-900 font-bold">{{ isUpdating ? 'Actualizar' : 'Crear' }} Client</span>
-        <Button @click="redirectToClientsPage">Tornar</Button>
+        <Button class="" @click="redirectToClientsPage">Tornar</Button>
       </div>
       <form @submit.prevent="saveClient" class="formgrid grid">
         <div class="field col-12 md:col-6 mb-3">
@@ -39,7 +39,7 @@
           </div>
         </div>
 
-        <div class="flex field col-12 mt-4 ">
+        <div class="flex field col-12 mt-4">
           <Button type="submit" :label="isUpdating ? 'Actualitzar' : 'Crear'" />
         </div>
       </form>

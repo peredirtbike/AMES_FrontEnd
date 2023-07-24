@@ -3,12 +3,14 @@
   <div>
     <DataTable :value="filteredClients(searchTerm)" tableStyle="min-width: 50rem">
       <template #header>
-          <div class="flex flex-wrap align-items-center justify-content-between gap-2">
+          <div class="flex align-items-center justify-content-between gap-2">
               <span class="text-xl text-900 font-bold">Clients</span>
-              <Button class="" @click="redirectToNewClientForm">Crea un client</Button>
+              <Button class="right-at" @click="redirectToNewClientForm">Crea un client</Button>
           </div>
-          <InputText type="text" v-model="searchTerm" placeholder="Busca clients" />
 
+          <div class="flex align-items-center gap-2">
+              <InputText size="small" v-model="searchTerm" placeholder="Cerca un client" />
+          </div>
       </template>
       <Column field="name" header="Nom"></Column>
       <Column field="lastName" header="Cognoms"></Column>
