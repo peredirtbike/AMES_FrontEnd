@@ -1,29 +1,42 @@
 <template>
   <div>
-    <form @submit.prevent="saveClient">
-      <label for="name">Nom:</label>
-      <input type="text" id="name" v-model="client.name" required>
+    <form @submit.prevent="saveClient" class="p-fluid">
+      <div class="p-field">
+        <label for="name">Nom:</label>
+        <InputText v-model="client.name" id="name" required />
+      </div>
 
-      <label for="lastName">Cognoms:</label>
-      <input type="text" id="lastName" v-model="client.lastName" required>
+      <div class="p-field">
+        <label for="lastName">Cognoms:</label>
+        <InputText v-model="client.lastName" id="lastName" required />
+      </div>
 
-      <label for="phone">Telèfon:</label>
-      <input type="text" id="phone" v-model="client.phone" required>
+      <div class="p-field">
+        <label for="phone">Telèfon:</label>
+        <InputText v-model="client.phone" id="phone" required />
+      </div>
 
-      <label for="email">Email:</label>
-      <input type="email" id="email" v-model="client.email" required>
+      <div class="p-field">
+        <label for="email">Email:</label>
+        <InputText type="email" v-model="client.email" id="email" required />
+      </div>
 
-      <label for="address">Adreça:</label>
-      <input type="text" id="address" v-model="client.address" required>
+      <div class="p-field">
+        <label for="address">Adreça:</label>
+        <InputText v-model="client.address" id="address" required />
+      </div>
 
-      <label for="preferential">Preferencial:</label>
-      <input type="checkbox" id="preferential" v-model="client.preferential">
+      <div class="p-field-checkbox">
+        <Checkbox v-model="client.preferential" id="preferential" binary="true" />
+        <label for="preferential">Preferencial</label>
+      </div>
 
-      <label for="discount">Descompte:</label>
-      <input type="checkbox" id="discount" v-model="client.hasDiscount">
+      <div class="p-field-checkbox">
+        <Checkbox v-model="client.hasDiscount" id="discount" binary="true" />
+        <label for="discount">Descompte</label>
+      </div>
 
-      <Button type="submit">{{ $route.params.id ? 'Actualizar' : 'Crear' }}</Button>
-      
+      <Button type="submit" :label="$route.params.id ? 'Actualizar' : 'Crear'" />
     </form>
   </div>
 </template>

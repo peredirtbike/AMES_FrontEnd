@@ -2,7 +2,9 @@ import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import ColumnGroup from 'primevue/columngroup';   // optional
+import ColumnGroup from 'primevue/columngroup';
+import Checkbox from 'primevue/checkbox';
+   // optional
 import Row from 'primevue/row';
 
 export default{
@@ -13,5 +15,6 @@ export default{
         app.component('Column', Column);
         app.component('ColumnGroup', ColumnGroup);
         app.component('Row', Row);
+        app.component('Checkbox',Checkbox)
     },
 };
